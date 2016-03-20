@@ -1,13 +1,14 @@
 var rucksack = require('rucksack-css')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var webpack = require('webpack')
+var poststylus = require('poststylus')
 var path = require('path')
 
 
 module.exports = {
   entry: {
-    jsx: ['webpack-dev-server/client?http://0.0.0.0:3000', 'webpack/hot/only-dev-server', './client/index.js'],
-    vendor: ['react']
+    jsx: ['webpack-dev-server/client?http://0.0.0.0:3003', 'webpack/hot/only-dev-server', './client/index.js'],
+    vendor: ['react', 'redux', 'react-router']
   },
   output: {
     filename: 'bundle.js'
@@ -18,32 +19,31 @@ module.exports = {
     inline: true,
     progress: true,
     colors: true,
-    port: 3000
+    port: 3003
   },
   module: {
     loaders: [
       {
         test: /\.css$/,
-        include: /client/,
         loaders: [
           'style-loader',
-          'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+          'css-loader',
           'postcss-loader'
         ]
-      },
-      {
-        test: /\.css$/,
-        exclude: /client/,
-        loader: 'style!css'
-      },
-      {
+      }, {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loaders: [
           'react-hot',
           'babel-loader'
         ]
-      },
+      }, {
+        test: /\.styl$/,
+        loader: 'style-loader!css-loader!stylus-loader'
+      }, {
+        test: /\.(png|jpg)$/,
+        loader: 'url-loader'
+      }
     ],
   },
   resolve: {
@@ -54,6 +54,11 @@ module.exports = {
       autoprefixer: true
     })
   ],
+  stylus: {
+    use: [
+      poststylus([ 'autoprefixer', 'rucksack-css' ])
+    ]
+  },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
