@@ -1,20 +1,22 @@
 
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
+import { Tabs, Tab } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import Header from '../../components/Header'
-import MainSection from '../../components/MainSection'
-import * as TodoActions from '../../actions/todos'
-import style from './style.css'
+
 
 class App extends Component {
   render() {
     const { todos, actions, children } = this.props
     return (
-      <div className={style.normal}>
-        <Header addTodo={actions.addTodo} />
-        <MainSection todos={todos} actions={actions} />
-        {children}
+      <div>
+        <Tabs defaultActiveKey={2} position="left" tabWidth={3}>
+          <Tab eventKey={1} title="获取订单">Tab 1 content</Tab>
+          <Tab eventKey={2} title="种类配置">Tab 3 content</Tab>
+          <Tab eventKey={3} title="商品配置">Tab 2 content</Tab>
+          <Tab eventKey={4} title="优惠券配置">Tab 3 content</Tab>
+          <Tab eventKey={5} title="寝室楼配置">Tab 3 content</Tab>
+        </Tabs>
       </div>
     )
   }
@@ -22,13 +24,13 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    todos: state.todos
+
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(TodoActions, dispatch)
+
   }
 }
 

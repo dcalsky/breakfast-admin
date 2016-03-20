@@ -1,8 +1,8 @@
 {
-  "name": "frontend-boilerplate",
+  "name": "breakfast-admin",
   "version": "1.0.0",
   "private": true,
-  "description": "A boilerplate of things that shouldn't exist",
+  "description": "breakfast-admin",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -41,5 +41,9 @@
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1",
     "webpack-hot-middleware": "^2.7.1"
+  },
+  "dependencies": {
+    "avoscloud-sdk": "^0.6.9",
+    "react-bootstrap": "^0.28.3"
   }
 }
