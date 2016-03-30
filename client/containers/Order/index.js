@@ -66,7 +66,6 @@ export default React.createClass({
        <Table striped bordered condensed hover>
          <thead>
          <tr>
-           <th>id</th>
            <th>name</th>
            <th>phone</th>
            <th>date</th>
@@ -80,7 +79,6 @@ export default React.createClass({
               this.state.orders.map(order => {
                 return (
                   <tr key={order.id}>
-                    <td>{order.id}</td>
                     <td>{order.get('name')}</td>
                     <td>{order.get('phone')}</td>
                     <td>{moment(order.get('startDate')).format("YYYY/MM/DD HH:mm")}</td>

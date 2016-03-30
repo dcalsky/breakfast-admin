@@ -23,7 +23,15 @@ export default React.createClass({
         username: user.get('mobilePhoneNumber'),
       })
     })
-
+  },
+  handleLogout() {
+    AV.User.logOut()
+    this.setState({
+      username: null,
+      password: null,
+      key: null,
+      token: null
+    })
   },
   handleGetKey() {
     AV.Cloud.requestSmsCode(this.state.username)
@@ -61,7 +69,10 @@ export default React.createClass({
         <div className="login">
           {
             AV.User.current() ?
-              <p>欢迎回来, {AV.User.current().get('mobilePhoneNumber')}</p>
+              <div>
+                欢迎回来, {AV.User.current().get('mobilePhoneNumber')}
+                <button onClick={this.handleLogout}>退出</button>
+              </div>
               :
               <div>
                 <input type="text" value={this.state.username} onChange={this.handleInputChange.bind(this, 'phone')} placeholder="手机号"/>

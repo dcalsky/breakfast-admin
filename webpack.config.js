@@ -1,4 +1,5 @@
 var rucksack = require('rucksack-css')
+var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var webpack = require('webpack')
 var poststylus = require('poststylus')
@@ -25,11 +26,7 @@ module.exports = {
     loaders: [
       {
         test: /\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader'
-        ]
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader", "postcss-loader")
       }, {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -60,6 +57,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new ExtractTextPlugin("styles.css"),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
     new HtmlWebpackPlugin({

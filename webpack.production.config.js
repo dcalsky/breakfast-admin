@@ -1,5 +1,6 @@
 var rucksack = require('rucksack-css')
 var webpack = require('webpack')
+var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var poststylus = require('poststylus')
 var path = require('path')
@@ -18,11 +19,7 @@ module.exports = {
     loaders: [
       {
         test: /\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader'
-        ]
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader", "postcss-loader")
       }, {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -32,7 +29,7 @@ module.exports = {
         ]
       }, {
         test: /\.styl$/,
-        loader: 'style-loader!css-loader!stylus-loader'
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader", "stylus-loader")
       }, {
         test: /\.(png|jpg)$/,
         loader: 'url-loader'
@@ -53,6 +50,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new ExtractTextPlugin("styles.css"),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.[hash].js'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
