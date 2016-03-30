@@ -1,7 +1,6 @@
 import React from 'react'
 import {Link, IndexLink} from 'react-router'
 import AV from 'avoscloud-sdk'
-import { Tabs, Tab } from 'react-bootstrap'
 
 const ACTIVE = { color: 'red' }
 
@@ -74,7 +73,7 @@ export default React.createClass({
           }
 
         </div>
-        <ul>
+        <ul className="nav">
           <li><IndexLink to="/"           activeStyle={ACTIVE}>首页</IndexLink></li>
           <li><Link      to="/order"      activeStyle={ACTIVE}>订单</Link></li>
           <li><Link      to="/floor"      activeStyle={ACTIVE}>寝室楼</Link></li>
@@ -82,8 +81,7 @@ export default React.createClass({
           <li><Link      to="/coupon"      activeStyle={ACTIVE}>优惠券</Link></li>
           <li><Link      to="/food"      activeStyle={ACTIVE}>食物</Link></li>
         </ul>
-
-        {this.props.children}
+          {this.props.children}
       </div>
     )
   }
