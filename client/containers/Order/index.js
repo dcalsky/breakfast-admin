@@ -34,10 +34,12 @@ export default React.createClass({
     const query_order = new AV.Query('Order')
     const query_foods = new AV.Query('OrderDetail')
     query_order.equalTo('floor', this.state.floor)
-    query_order.equalTo('paid', true)
     query_order.descending('startDate')
     if(this.state.today) {
-      query_order.equalTo('startDate', new Date())
+      const firstTime = moment().hour(0).minute(0).second(0).toDate()
+      const lastTime = moment().hour(24).minute(0).second(0).toDate()
+      query_order.greaterThan('startDate', firstTime)
+      query_order.lessThan('startDate', lastTime)
     }
     query_order.find(orders => {
       orders.map(order => {
@@ -85,10 +87,14 @@ export default React.createClass({
                     <td>{order.get('floor')}</td>
                     <td>{order.get('room')}</td>
                     <td>
-                      {order.foods.map(detail => {
+                      {order.foods.map((detail, i) => {
                         return (
-                          <div>
-                            <p>{detail.get('name')} * {detail.get('count')}</p>
+                          <div key={`detail-${i}`}>
+                            <p>{detail.get('name')} {detail.get('ingredientArray').map((ingredientName, i) => {
+                              return (
+                              <span key={`ingredient-${i}`}>+{ingredientName}</span>
+                              )
+                            })} *  {detail.get('count')}</p>
                           </div>)
                       })}
                     </td>
